@@ -1,0 +1,43 @@
+
+
+#ici on doit mettre les valeurs concrètes 
+
+#====> Sécurité 
+resource_group_keyvault_name ="rg_ecommerce-securite-staging"
+location_resource_group_kv ="France Central"
+environnement = "staging"
+
+
+keyvault_name ="myecommercekvstaging"
+keyvault_sku_name="standard"
+keyvault_password_secret_name ="sql-admin-password" 
+#======> 
+
+resource_group_name = "my_ecommerce-rg-staging"
+location = "France Central"
+
+
+
+#le compte de stockage 
+
+storage_acount_name = "myecommercestgstaging"
+storage_account_replication_type ="LRS"
+storage_account_tier ="Standard"
+
+
+
+#azure data factory
+
+datafactory_name = "my-datafact-staging"
+
+
+#Le link service sql database 
+ls_sql_database_name = "ls_sql-staging"
+
+
+#Connexion à la base de données pour le link service 
+
+sql_server_name ="sql-server-ecom-staging"
+sql_database_name="ecom"
+sql_database_login="bass"
+

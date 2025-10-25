@@ -1,0 +1,22 @@
+
+
+# Terraform files
+*.tfstate
+*.tfstate.*
+.terraform/
+crash.log
+
+
+# Credentials / keys
+*.pem
+*.key
+*.env
+
+# VSCode / IDE / system
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
