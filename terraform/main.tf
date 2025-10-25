@@ -131,3 +131,14 @@ resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "ls_adls" 
   
 }
 
+#===> Création du dataset source 
+
+resource "azurerm_data_factory_dataset_sql_server_table" "ds_sql" {
+  name = var.ds_sql_name
+  data_factory_id = azurerm_data_factory.mydatafact.id
+  linked_service_name = azurerm_data_factory_linked_service_azure_sql_database.ls_sql.name
+
+  table_name = var.table_name_for_dataset
+}
+
+#Création du dataset destination 

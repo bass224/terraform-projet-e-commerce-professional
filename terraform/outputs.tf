@@ -66,3 +66,11 @@ output "ls_alds_gen2_name" {
     value = azurerm_data_factory_linked_service_data_lake_storage_gen2.ls_adls.name
   
 }
+
+#output du dataset source 
+
+output "ds_sql_name" {
+  description = "le nom du dataset sql crée "
+  value = azurerm_data_factory_dataset_sql_server_table.ds_sql.name
+}
+

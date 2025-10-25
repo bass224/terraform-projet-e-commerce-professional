@@ -115,3 +115,16 @@ variable "ls_alds_gen2_name" {
   type = string
 }
 
+#création du des datasets 
+
+variable "ds_sql_name" {
+  description = "Le nom du dataset source (sql database)"
+  type = string
+}
+
+#Nom de la table qu'on requete 
+
+variable "table_name_for_dataset" {
+  description = "le nom de la table sql qu'on va requeté pour le dataset"
+  type = string
+}

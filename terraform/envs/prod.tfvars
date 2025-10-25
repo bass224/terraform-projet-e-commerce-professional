@@ -43,3 +43,10 @@ sql_database_login="bass"
 
 #le link service adls_gen2
 ls_alds_gen2_name = "ls_adls_gen2-prod"
+
+#le dataset sql 
+ds_sql_name = "ds_sql-prod"
+
+
+#le nom de la table sql 
+table_name_for_dataset = "dbo.orders"
