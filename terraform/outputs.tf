@@ -74,3 +74,8 @@ output "ds_sql_name" {
   value = azurerm_data_factory_dataset_sql_server_table.ds_sql.name
 }
 
+output "ds_adls_deployment_mode" {
+  description = "le mode de deploiement"
+  value = azurerm_resource_group_template_deployment.ds_adls_gen2.deployment_mode
+}
+

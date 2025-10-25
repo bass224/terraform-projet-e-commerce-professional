@@ -142,3 +142,25 @@ resource "azurerm_data_factory_dataset_sql_server_table" "ds_sql" {
 }
 
 #Création du dataset destination 
+resource "azurerm_resource_group_template_deployment" "ds_adls_gen2" {
+  name                = var.ds_adls_deployement_name
+  resource_group_name = azurerm_resource_group.rg.name
+  deployment_mode     = var.ds_adls_deployment_mode
+
+  template_content = templatefile("${path.module}/../adf/${var.ds_adls_json_file}.json", {})
+
+  parameters_content = jsonencode({
+    dataFactoryName = {
+      value = azurerm_data_factory.mydatafact.name
+    }
+
+    adlsLinkedServiceName = {
+      value = azurerm_data_factory_linked_service_data_lake_storage_gen2.ls_adls.name
+      # ^ adapte le type/nom exact de ta ressource linked service
+    }
+  })
+
+  depends_on = [
+    azurerm_data_factory.mydatafact
+  ]
+}

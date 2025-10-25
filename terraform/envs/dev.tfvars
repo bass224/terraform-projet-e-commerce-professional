@@ -46,3 +46,9 @@ ds_sql_name = "ds_sql-dev"
 
 #le nom de la table sql 
 table_name_for_dataset = "dbo.orders"
+
+#le deploiement et le dataset destination 
+
+ds_adls_deployement_name ="adls_deploy"
+ds_adls_deployment_mode ="Incremental"
+ds_adls_json_file ="dataset_adls"

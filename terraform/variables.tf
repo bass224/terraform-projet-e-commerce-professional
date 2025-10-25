@@ -115,7 +115,7 @@ variable "ls_alds_gen2_name" {
   type = string
 }
 
-#création du des datasets 
+#création du datasets source 
 
 variable "ds_sql_name" {
   description = "Le nom du dataset source (sql database)"
@@ -128,3 +128,24 @@ variable "table_name_for_dataset" {
   description = "le nom de la table sql qu'on va requeté pour le dataset"
   type = string
 }
+
+
+#création du dataset de destination adls gen2
+
+variable "ds_adls_deployement_name" {
+  description = "Le nom du deployement pour le datastes destination"
+  type = string
+}
+
+variable "ds_adls_deployment_mode" {
+  description = "Le mode de deploiement"
+  type = string
+  default = "Incremental"
+}
+
+variable "ds_adls_json_file" {
+  description = "Le fichier json du dataset à deployer"
+  type = string
+  default = "dataset_adls"
+}
+
