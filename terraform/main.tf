@@ -42,9 +42,18 @@ resource "azurerm_role_assignment" "kv_secrets_officer" {
   principal_id         = data.azurerm_client_config.current.object_id
 }
 
+# Donner aussi le droit de LIRE les secrets (nécessaire pour data.azurerm_key_vault_secret)
+resource "azurerm_role_assignment" "kv_secrets_user" {
+  scope                = azurerm_key_vault.kv.id
+  role_definition_name = "Key Vault Secrets User"
+  principal_id         = data.azurerm_client_config.current.object_id
+  depends_on           = [azurerm_key_vault.kv]
+}
 # Secret du mot de passe SQL (création)
 # NOTE: la valeur est fournie au runtime via -var "sql_admin_password=..."
 # ----------------------------------------
+/*
+on le fera avec az pour éviter d'avoir des mots de passe avec terraform 
 resource "azurerm_key_vault_secret" "sql_admin_password" {
   name         = var.keyvault_password_secret_name
   value        = var.sql_database_password
@@ -52,6 +61,8 @@ resource "azurerm_key_vault_secret" "sql_admin_password" {
   depends_on   = [azurerm_role_assignment.kv_secrets_officer]
   content_type = "password"
 }
+
+*/
 
 #on utilise data pour lire ou récupérer un objet déjà existant 
 
@@ -176,7 +187,7 @@ resource "azurerm_data_factory_linked_service_azure_sql_database" "ls_sql" {
   name = var.ls_sql_database_name
   data_factory_id = azurerm_data_factory.mydatafact.id
   #connection_string = "Server=tcp:${var.sql_server_name}.database.windows.net,1433;Database=${var.sql_database_name};User ID=${var.sql_database_login};Password=${var.sql_database_password};Encrypt=true;Connection Timeout=30;"
-  connection_string = "Server=tcp:${var.sql_server_name}.database.windows.net,1433;Database=${var.sql_database_name};User ID=${var.sql_database_login};Password=${azurerm_key_vault_secret.sql_admin_password.value};Encrypt=true;Connection Timeout=30;"
+  connection_string = "Server=tcp:${var.sql_server_name}.database.windows.net,1433;Database=${var.sql_database_name};User ID=${var.sql_database_login};Password=${data.azurerm_key_vault_secret.sql_admin_password.value};Encrypt=true;Connection Timeout=30;"
 }
 
 
@@ -202,7 +213,7 @@ resource "azurerm_data_factory_dataset_sql_server_table" "ds_sql" {
 
 #Création du dataset destination 
 resource "azurerm_resource_group_template_deployment" "ds_adls_gen2" {
-  name                = var.ds_adls_deployement_name
+  name                = var.ds_adls_gen2
   resource_group_name = azurerm_resource_group.rg.name
   deployment_mode     = var.ds_adls_deployment_mode
 
@@ -217,6 +228,10 @@ resource "azurerm_resource_group_template_deployment" "ds_adls_gen2" {
       value = azurerm_data_factory_linked_service_data_lake_storage_gen2.ls_adls.name
       # ^ adapte le type/nom exact de ta ressource linked service
     }
+
+    datasetName = {
+    value = var.ds_adls_gen2
+  }
   })
 
   depends_on = [
@@ -234,8 +249,13 @@ resource "azurerm_data_factory_pipeline" "pl_copy_sql_to_adls" {
 
   activities_json = templatefile("${path.module}/../adf/${var.pipeline_file}.json.tmpl", {
     activity_name  = var.activity_name
-    sql_table      = var.sql_table
+    sql_table      = var.table_name_for_dataset
     input_dataset  = var.ds_sql_name
     output_dataset = var.ds_adls_gen2
   })
+
+  depends_on = [
+    azurerm_data_factory_dataset_sql_server_table.ds_sql,
+    azurerm_resource_group_template_deployment.ds_adls_gen2
+  ]
 }

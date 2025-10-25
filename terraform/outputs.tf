@@ -18,7 +18,7 @@ output "resource_group_keyvault_id" {
 }
 
 output "sql_password_secret_id" {
-  value       = azurerm_key_vault_secret.sql_admin_password.id
+   value = data.azurerm_key_vault_secret.sql_admin_password.id
   description = "ID du secret du mdp SQL"
   sensitive   = true
 }
