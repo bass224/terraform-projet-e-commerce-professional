@@ -48,6 +48,20 @@ output "storage_acount_id" {
   
 }
 
+
+
+output "sql_server_name" {
+  description = "Le nom du server qui va hébérgé notre base de données"
+  value = azurerm_mssql_database.sql_db.name
+}
+
+output "sql_database_name" {
+  description = "Le nom de la database crée"
+  value = azurerm_mssql_server.sql_server.name
+}
+
+
+
 output "datafactory_name" {
     description = "Le nom du azure data factory crée"
     value = azurerm_data_factory.mydatafact.name
