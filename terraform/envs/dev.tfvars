@@ -38,3 +38,5 @@ sql_server_name ="sql-server-ecom-dev"
 sql_database_name="ecom"
 sql_database_login="bass"
 
+#le link service adls_gen2
+ls_alds_gen2_name = "ls_adls_gen2-dev"

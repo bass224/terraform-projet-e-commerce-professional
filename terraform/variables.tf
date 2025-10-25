@@ -108,3 +108,10 @@ variable "sql_database_password" {
   sensitive = true
 }
 
+#création link service pour le ADLS Gen2
+
+variable "ls_alds_gen2_name" {
+  description = "Le nom du link service pour le Azure datalake storage gen2"
+  type = string
+}
+

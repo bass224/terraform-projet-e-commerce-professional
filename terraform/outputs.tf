@@ -58,3 +58,11 @@ output "ls_sql_name" {
   description = "le nom du link service de la base sql crée"
   value = azurerm_data_factory_linked_service_azure_sql_database.ls_sql.name
 }
+
+#output link service alds_gen2
+
+output "ls_alds_gen2_name" {
+    description = "le nom du link service du adls_gen2 crée"
+    value = azurerm_data_factory_linked_service_data_lake_storage_gen2.ls_adls.name
+  
+}

@@ -123,4 +123,11 @@ resource "azurerm_data_factory_linked_service_azure_sql_database" "ls_sql" {
 
 #===> Création du link service adls gen2 
 
+resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "ls_adls" {
+  name = var.ls_alds_gen2_name
+  data_factory_id = azurerm_data_factory.mydatafact.id
+  use_managed_identity = true
+  url ="https://${var.storage_acount_name}.dfs.core.windows.net/"
+  
+}
 
