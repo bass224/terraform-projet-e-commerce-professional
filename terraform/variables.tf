@@ -149,3 +149,38 @@ variable "ds_adls_json_file" {
   default = "dataset_adls"
 }
 
+
+#le dataset destination 
+variable "ds_adls_gen2" {
+  description = "Le nom du dataset destination"
+  type = string
+  
+}
+
+
+
+#création d'une pipline de copy 
+variable "pipeline_name" {
+  description = "Nom du pipeline Data Factory"
+  type        = string
+  default     = "PL_Copy_SQL_to_ADLS"
+}
+
+variable "activity_name" {
+  description = "Nom de l'activité de copie"
+  type        = string
+  default     = "Copy_SQL_to_ADLS"
+}
+
+variable "sql_table" {
+  description = "Nom de la table SQL source"
+  type        = string
+  default     = "dbo.orders"
+}
+
+
+variable "pipeline_file" {
+  description = "Le fichier json du pipeline à exécuter "
+  type = string
+  default = "pipeline_copy"
+}

@@ -55,3 +55,12 @@ table_name_for_dataset = "dbo.orders"
 ds_adls_deployement_name ="adls_deploy"
 ds_adls_deployment_mode ="Incremental"
 ds_adls_json_file ="dataset_adls"
+
+
+
+#le dataset destination adls 
+ds_adls_gen2 = "ds_adls_gen2-staging"
+
+#nom du fichier json qui va créer le pipeline 
+
+pipeline_file = "pipeline_copy"

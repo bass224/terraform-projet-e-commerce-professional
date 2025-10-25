@@ -223,3 +223,19 @@ resource "azurerm_resource_group_template_deployment" "ds_adls_gen2" {
     azurerm_data_factory.mydatafact
   ]
 }
+
+
+#===> création du pipeline d'activité de copy 
+
+resource "azurerm_data_factory_pipeline" "pl_copy_sql_to_adls" {
+  name            = var.pipeline_name
+  data_factory_id = azurerm_data_factory.mydatafact.id
+  description     = "Pipeline qui copie les données SQL vers ADLS."
+
+  activities_json = templatefile("${path.module}/../adf/${var.pipeline_file}.json.tmpl", {
+    activity_name  = var.activity_name
+    sql_table      = var.sql_table
+    input_dataset  = var.ds_sql_name
+    output_dataset = var.ds_adls_gen2
+  })
+}
