@@ -22,6 +22,18 @@ Mettre en place un pipeline data factory automatisé (terraform + ADF) pour copi
 2. ADF va exécuter notre pipeline de copy de données de SQL vers Azure data lake storage gen2 
 3. Les données sont ainsi exportés au format csv vers la landing zone 
 
+## Lancmeent du projet : 
+-  Cloner le repos. 
+-  Démarrer az cli et se connecter sur votre portail azure (az login) 
+-  Créer une key vault pour éviter d'avoir des mdp en dûr dans des scripts exemple pour crée un keyvault: 
+az keyvault secret set --vault-name myecommercekvdev --name "sql-admin-password" --value "MonSuperMotDePasse"
+- Puis démarrer terraform et faire terran init, terraform plan et terraform deploy pour déployer les ressources (choisir dev, staging ou prod)
+- Une fois déployé, comme je n'ai pas la table orders dans ma base de données, et c'est pas pratique de créer une table 
+avec terraform, alors allez dans la base sql qu'on a crée, se loguer (attention peut être autorisé l'ip de la personne qui y va), aller dans editeur de requêtes et lancer le code qui se trouve dans le table_orders.sql (cela créera la table orders)
+- Puis après tout sera ok, on pourra teser les link services, datasets, pipeline, trigger et même retrouver les données dans 
+le container landing de la landing zone. Et sur ADF, on pourra voir si le job a tourné ou pas, on peut le lancé manuellement si on le souhaite. 
+
+
 ## Structure 
 terraform/   
 data/  
@@ -34,7 +46,7 @@ staging
 prod    
 
 ## Trigger
-- Exécution automatique tous  les jours à hh:mm:ss
+- Exécution automatique tous  les jours à 00:00:00ss
 
 ## Auteur
 Abdoul Bassity DIALLO / bass224
