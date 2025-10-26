@@ -166,18 +166,61 @@ resource "azurerm_mssql_firewall_rule" "allow_azure_services" {
 
 
 #Création du azure datafactory 
-
+# --- Création de la Data Factory avec identité managée ---
 resource "azurerm_data_factory" "mydatafact" {
-  name= var.datafactory_name
-  location = azurerm_resource_group.rg.location
+  name                = var.datafactory_name
+  location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
   tags = {
-      environnement =var.environnement
+    environnement = var.environnement
+  }
 
-    }
-
+  # Donner l'identité managée à ADF sinon il ne pourra pas accéder aux autres ressources comme ADLS Gen2
+  # Cela demande à Azure d’attacher une identité managée (service principal) à notre ADF.
+  identity {
+    type = "SystemAssigned"
+  }
 }
+
+# --- Nouveau bloc : relire la Data Factory après création pour récupérer l’identité ---
+data "azurerm_data_factory" "mydatafact_data" {
+  name                = azurerm_data_factory.mydatafact.name
+  resource_group_name = azurerm_resource_group.rg.name
+
+  depends_on = [
+    azurerm_data_factory.mydatafact
+  ]
+}
+
+# --- Donner les droits en lecture et écriture de notre ADF sur le ADLS Gen2 ---
+resource "azurerm_role_assignment" "adf_to_adls_contrib" {
+  scope                = azurerm_storage_account.stg.id
+  role_definition_name = "Storage Blob Data Contributor"
+
+  # 🔁 Avant : azurerm_data_factory.mydatafact.identity[0].principal_id
+  #  Maintenant : on récupère le principal_id depuis le data source (plus fiable)
+  principal_id         = data.azurerm_data_factory.mydatafact_data.identity[0].principal_id
+
+  depends_on = [
+    azurerm_data_factory.mydatafact
+  ]
+}
+
+# --- Donner les droits à ADF pour lire les secrets sur Key Vault ---
+resource "azurerm_role_assignment" "adf_to_kv_secrets_user" {
+  scope                = azurerm_key_vault.kv.id
+  role_definition_name = "Key Vault Secrets User"
+
+  # 🔁 Avant : azurerm_data_factory.mydatafact.identity[0].principal_id
+  #  Maintenant : même principe, on lit via le data source
+  principal_id         = data.azurerm_data_factory.mydatafact_data.identity[0].principal_id
+
+  depends_on = [
+    azurerm_data_factory.mydatafact
+  ]
+}
+
 
 #création du link service sql database 
 
