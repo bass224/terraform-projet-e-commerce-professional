@@ -41,8 +41,8 @@ sql_database_login="bass"
 #le link service adls_gen2
 ls_alds_gen2_name = "ls_adls_gen2-dev"
 
-#le dataset sql 
-ds_sql_name = "ds_sql-dev"
+#le dataset sql (attention on peut pas avoir de - dans le nom)
+ds_sql_name = "ds_sql_dev"
 
 #le nom de la table sql 
 table_name_for_dataset = "dbo.orders"
@@ -54,8 +54,8 @@ ds_adls_deployment_mode ="Incremental"
 ds_adls_json_file ="dataset_adls"
 
 
-#le dataset destination adls 
-ds_adls_gen2 = "ds_adls_gen2-dev"
+#le dataset destination adls (attention pas de - dans le nom )
+ds_adls_gen2 = "ds_adls_gen2_dev" 
 
 #nom du fichier json qui va créer le pipeline 
 
