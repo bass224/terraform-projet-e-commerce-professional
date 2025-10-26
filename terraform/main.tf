@@ -302,3 +302,43 @@ resource "azurerm_data_factory_pipeline" "pl_copy_sql_to_adls" {
     azurerm_resource_group_template_deployment.ds_adls_gen2
   ]
 }
+
+
+#Création d'un job qui va exécuter la pipeline tous les jours par exemple à HH:mm:ss
+
+
+resource "azurerm_data_factory_trigger_schedule" "trigger_daily" {
+
+  name =var.trigger_name
+  data_factory_id = azurerm_data_factory.mydatafact.id
+  description = "Delencheur quotidien de la pipeline de copy à 00:00"
+
+#à quelle fréquence : tous les 1j ours
+    frequency = "Day"
+    interval = 1 
+
+
+#à quelle heure de la journée
+  schedule {
+    hours = [ 00 ]
+    minutes = [ 00 ]
+  }
+  
+  #le job commence quand ? 
+  start_time = "2025-10-26T00:00:00Z"
+  #le job fini quand ? 
+  end_time = "2025-10-27T00:00:00Z"
+
+  #quel fuseau horaire ? 
+  time_zone   = "Romance Standard Time"       #prend le fuseau horaire de paris mais utc c'est gmt 
+
+ #on active le job 
+ activated = true
+
+
+ #le job va faire quoi ? lancer notre pipelie de copy 
+
+ pipeline {
+   name =azurerm_data_factory_pipeline.pl_copy_sql_to_adls.name
+ }
+}

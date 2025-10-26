@@ -60,3 +60,7 @@ ds_adls_gen2 = "ds_adls_gen2_dev"
 #nom du fichier json qui va créer le pipeline 
 
 pipeline_file = "pipeline_copy"
+
+#le job 
+
+trigger_name ="Trigger_copy_sql_to_adlsgen2"

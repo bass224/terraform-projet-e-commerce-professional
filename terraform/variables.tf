@@ -184,3 +184,12 @@ variable "pipeline_file" {
   type = string
   default = "pipeline_copy"
 }
+
+
+#pour le job 
+
+variable "trigger_name" {
+    description = "Le nom du job"
+    type = string
+}
+
