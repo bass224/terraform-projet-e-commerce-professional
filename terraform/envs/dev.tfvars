@@ -64,3 +64,9 @@ pipeline_file = "pipeline_copy"
 #le job 
 
 trigger_name ="Trigger_copy_sql_to_adlsgen2"
+
+#le nom des containers
+
+container_landing_name = "landing"
+container_cleansed_name ="cleansed"
+container_curated_name = "curated"

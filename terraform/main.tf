@@ -106,6 +106,15 @@ resource "azurerm_storage_account" "stg" {
 
 }
 
+#Création du landing zone 
+
+
+resource "azurerm_storage_container" "landing" {
+  name =var.container_landing_name
+  storage_account_name = azurerm_storage_account.stg.name
+  container_access_type = "private"
+}
+
 #----> création de la database : d'abord le server sql qui va hébergé la base
 # puis la database et autoriser notre pc et les ressources azure comme adf à y accéder 
 
@@ -342,3 +351,19 @@ resource "azurerm_data_factory_trigger_schedule" "trigger_daily" {
    name =azurerm_data_factory_pipeline.pl_copy_sql_to_adls.name
  }
 }
+
+#Création des containers landed cleansed et curated 
+
+resource "azurerm_storage_container" "cleansed" {
+  name =var.container_cleansed_name
+  storage_account_name = azurerm_storage_account.stg.name
+  container_access_type = "private"
+}
+
+
+resource "azurerm_storage_container" "curated" {
+  name =var.container_curated_name
+  storage_account_name = azurerm_storage_account.stg.name
+  container_access_type = "private"
+}
+

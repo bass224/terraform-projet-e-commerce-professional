@@ -193,3 +193,21 @@ variable "trigger_name" {
     type = string
 }
 
+
+#Création des containers pour les zones landing (celle là elle s'est crée toute seule normal lors du pipelin)
+#puis les zones cleansed et curated
+
+variable "container_landing_name" {
+  description = "le nom du container landing"
+  type = string
+}
+
+variable "container_cleansed_name" {
+  description = "le nom du container cleansed"
+  type = string
+}
+
+variable "container_curated_name" {
+  description = "le nom du container curated"
+  type = string
+}

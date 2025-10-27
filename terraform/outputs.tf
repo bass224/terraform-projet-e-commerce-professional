@@ -93,3 +93,28 @@ output "ds_adls_deployment_mode" {
   value = azurerm_resource_group_template_deployment.ds_adls_gen2.deployment_mode
 }
 
+
+#le job 
+
+output "job_name" {
+  description = "Le nom du job crée"
+  value = azurerm_data_factory_trigger_schedule.trigger_daily.name
+}
+
+#les containers 
+output "container_landing_name" {
+  description = "Le nom du container landing crée"
+  value = azurerm_storage_container.landing.name
+}
+
+output "container_cleansed_name" {
+  description = "Le nom du container cleansed crée"
+  value = azurerm_storage_container.cleansed
+}
+
+
+output "container_curated_name" {
+  description = "Le nom du container curated crée"
+  value = azurerm_storage_container.curated
+}
+
