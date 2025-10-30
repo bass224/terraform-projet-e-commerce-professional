@@ -118,3 +118,9 @@ output "container_curated_name" {
   value = azurerm_storage_container.curated
 }
 
+#le nom du workspace databricks crée 
+
+output "workspace_databricks_name" {
+  description = "le nom du workspace databricks crée "
+  value = azurerm_databricks_workspace.mydatabricks-wk.name
+}

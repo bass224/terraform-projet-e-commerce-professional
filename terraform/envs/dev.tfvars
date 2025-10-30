@@ -70,3 +70,7 @@ trigger_name ="Trigger_copy_sql_to_adlsgen2"
 container_landing_name = "landing"
 container_cleansed_name ="cleansed"
 container_curated_name = "curated"
+
+
+#le nom du workspace databricks 
+workspace_databricks_name ="mydatabricks_wk-dev"

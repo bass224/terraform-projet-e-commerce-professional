@@ -211,3 +211,12 @@ variable "container_curated_name" {
   description = "le nom du container curated"
   type = string
 }
+
+
+#mon workspace databricks 
+
+variable "workspace_databricks_name" {
+  description = "Le nom du workspace databricks"
+  type = string
+}
+
